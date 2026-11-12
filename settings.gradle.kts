@@ -1,4 +1,4 @@
-rootProject.name = "ehvn-patches"
+rootProject.name = "itsmengwh08.zaloxposed.4morphe"
 
 pluginManagement {
     repositories {
