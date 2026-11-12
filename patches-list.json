@@ -1,6 +1,6 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when semantic release (release.yml) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "1.0.0",
+  "version": "20261112-nightly",
   "patches": [
     {
       "name": "Clone app",
@@ -18,32 +18,14 @@
           "formFactor": "MOBILE",
           "targets": [
             {
-              "version": "26.09.01",
+              "version": "26.11.01",
               "versionCodes": {
-                "ARM64_V8A": 260901903
-              },
+                "ARM64_V8A": 261101901
+            },
               "isExperimental": false,
               "minSdk": null,
               "description": null
-            },
-            {
-              "version": "26.10.01",
-              "versionCodes": {
-                "ARM64_V8A": 261001905
-              },
-              "isExperimental": false,
-              "minSdk": null,
-              "description": null
-            },
-            {
-              "version": "26.10.02",
-              "versionCodes": {
-                "ARM64_V8A": 261002901
-              },
-              "isExperimental": true,
-              "minSdk": null,
-              "description": null
-            }
+            }  
           ]
         }
       ],
@@ -75,29 +57,11 @@
           "formFactor": "MOBILE",
           "targets": [
             {
-              "version": "26.09.01",
+              "version": "26.11.01",
               "versionCodes": {
-                "ARM64_V8A": 260901903
+                "ARM64_V8A": 261101901
               },
               "isExperimental": false,
-              "minSdk": null,
-              "description": null
-            },
-            {
-              "version": "26.10.01",
-              "versionCodes": {
-                "ARM64_V8A": 261001905
-              },
-              "isExperimental": false,
-              "minSdk": null,
-              "description": null
-            },
-            {
-              "version": "26.10.02",
-              "versionCodes": {
-                "ARM64_V8A": 261002901
-              },
-              "isExperimental": true,
               "minSdk": null,
               "description": null
             }
