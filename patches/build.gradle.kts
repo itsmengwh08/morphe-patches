@@ -1,4 +1,4 @@
-group = "io.github.electroheavenvn"
+group = "itsmengwh08.zaloxposed.4morphe"
 
 patches {
     // TODO: Update this section with your project details.
