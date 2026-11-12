@@ -3,12 +3,12 @@ group = "io.github.electroheavenvn"
 patches {
     // TODO: Update this section with your project details.
     about {
-        name = "EHVN Patches"
-        description = "Morphe patches for Android apps."
-        source = "git@github.com:ElectroHeavenVN/morphe-patches.git"
-        author = "ElectroHeavenVN"
-        contact = "https://t.me/electroheavenvn"
-        website = "https://discord.gg/electroheavenvn-va-nhung-nguoi-ban-1115634791321190420"
+        name = "Hiew's ZaloMorphe fork"
+        description = "Make ZaloMorphe better, up-to-date"
+        source = "git@github.com:itsmengwh08/morphe-patches"
+        author = "itsmengwh08"
+        contact = "https://m.me/itsmengwh08"
+        website = "https://facebook.com/itsmengwh08"
         license = "GPLv3"
     }
 }
