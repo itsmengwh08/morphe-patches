@@ -13,18 +13,9 @@ object Constants {
         // and Zalo does not support x86/x86_64 ABI
         targets = listOf(
             AppTarget(
-                version = "26.09.01",
-                versionCodes = mapOf(SupportedAbi.ARM64_V8A to 260901903),
-            ),
-            AppTarget(
-                version = "26.10.01",
-                versionCodes = mapOf(SupportedAbi.ARM64_V8A to 261001905),
-            ),
-            AppTarget(
-                version = "26.10.02",
-                versionCodes = mapOf(SupportedAbi.ARM64_V8A to 261002901),
-                isExperimental = true,
-            ),
+                version = "26.11.01",
+                versionCodes = mapOf(SupportedAbi.ARM64_V8A to 261101901),
+            )
         ),
     )
 }
