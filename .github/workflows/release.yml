@@ -1,17 +1,12 @@
-name: Release
+name: Build
 
 on:
   workflow_dispatch:
   push:
 
 jobs:
-  release:
-    name: Release
-    permissions:
-      contents: write
-      packages: write
-      id-token: write
-      attestations: write
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -28,7 +23,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: '28-nightlt/*'
+          node-version: '28-nightly/*'
           cache: 'npm'
 
       - name: Install dependencies
@@ -38,7 +33,7 @@ jobs:
         run: |
           mkdir -p patches/src/main/resources/modules
           curl -fL -o /tmp/zaloxposed.apk \
-  "https://github.com/ElectroHeavenVN/ZaloXposed/releases/download/nightly/ZaloXposed-app-release.apk"
+            "https://github.com/ElectroHeavenVN/ZaloXposed/releases/download/nightly/ZaloXposed-app-release.apk"
 
       - name: Patch ZaloXposed APK and sign
         env:
@@ -55,13 +50,9 @@ jobs:
           KEYSTORE_PATH="$RUNNER_TEMP/release.keystore"
           printf '%s' "$SIGNING_KEYSTORE_BASE64" | base64 --decode > "$KEYSTORE_PATH"
 
-          # 1. Download apktool
           curl -sLo /tmp/apktool.jar https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_3.0.3.jar
-
-          # 2. Decompile APK
           java -jar /tmp/apktool.jar d /tmp/zaloxposed.apk -o /tmp/zaloxposed_out -f
 
-          # 3. Patch MorpheConstants.smali: isPatchedByMorphe() return true (0x1) and field PATCHED_BY_MORPHE = true
           TARGET_SMALI=$(find /tmp/zaloxposed_out -name "MorpheConstants.smali")
           if [ -z "$TARGET_SMALI" ]; then
             echo "MorpheConstants.smali not found!" >&2
@@ -71,10 +62,8 @@ jobs:
           sed -i '/^\.method public static isPatchedByMorphe()Z/,/^\.end method/ s/const\/4 v0, 0x0/const\/4 v0, 0x1/' "$TARGET_SMALI"
           sed -i 's/\.field private static final PATCHED_BY_MORPHE:Z = false/\.field private static final PATCHED_BY_MORPHE:Z = true/' "$TARGET_SMALI"
 
-          # 4. Rebuild APK
           java -jar /tmp/apktool.jar b /tmp/zaloxposed_out -o /tmp/zaloxposed_patched.apk
 
-          # 5. Zipalign and sign with release keystore
           BUILD_TOOLS_DIR=$(ls -d $ANDROID_HOME/build-tools/* | sort -V | tail -n 1)
           $BUILD_TOOLS_DIR/zipalign -p -f 4 /tmp/zaloxposed_patched.apk patches/src/main/resources/modules/app-release.apk
           $BUILD_TOOLS_DIR/apksigner sign \
@@ -83,3 +72,15 @@ jobs:
             --ks-key-alias "$SIGNING_KEY_ALIAS" \
             --key-pass "pass:$SIGNING_KEY_PASSWORD" \
             patches/src/main/resources/modules/app-release.apk
+
+      - name: Build patches
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./gradlew :patches:buildAndroid --no-daemon
+
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: morphe-patches
+          path: patches/build/libs/patches-*.mpp
+          if-no-files-found: error
