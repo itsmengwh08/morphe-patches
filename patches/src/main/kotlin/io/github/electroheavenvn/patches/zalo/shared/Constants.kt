@@ -26,7 +26,11 @@ object Constants {
             ),
             AppTarget(
                 version = "26.11.01",
-                versionCodes = mapOf(SupportedAbi.ARM64_V8A to 261101901),
+                versionCodes = mapOf(SupportedAbi.ARM64_V8A to 261101901),    
+            ),
+            AppTarget(
+                version = "26.11.01",
+                versionCodes = mapOf(SupportedAbi.ARM64_V8A to 261101901),    
             ),
         ),
     )
